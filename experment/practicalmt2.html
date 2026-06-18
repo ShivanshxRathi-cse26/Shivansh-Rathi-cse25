@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Employee Record System</title>
+
+<style>
+body {
+    font-family: Arial;
+    background: #f2f2f2;
+    text-align: center;
+}
+
+.container {
+    background: white;
+    padding: 20px;
+    margin: 30px auto;
+    width: 350px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px gray;
+}
+
+input {
+    width: 90%;
+    padding: 10px;
+    margin: 5px;
+}
+
+button {
+    padding: 10px;
+    margin: 5px;
+    cursor: pointer;
+}
+
+ul {
+    text-align: left;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <h2>Employee System</h2>
+
+    <input type="text" id="name" placeholder="Enter Name">
+    <input type="number" id="salary" placeholder="Enter Salary">
+
+    <br>
+
+    <button onclick="addEmployee()">Add</button>
+    <button onclick="showEmployees()">Display</button>
+    <button onclick="filterEmployees()">Salary > 50000</button>
+    <button onclick="calculateTotal()">Total Salary</button>
+
+    <h3>Employee List</h3>
+    <ul id="list"></ul>
+
+    <h3 id="total"></h3>
+</div>
+
+<script>
+
+
+let employees = [];
+function addEmployee() {
+    let name = document.getElementById("name").value;
+    let salary = parseInt(document.getElementById("salary").value);
+
+    if(name === "" || isNaN(salary)) {
+        alert("Enter valid data!");
+        return;
+    }
+
+    employees.push({ name: name, salary: salary });
+
+    alert("Employee Added!");
+}
+
+// Display employees
+function showEmployees() {
+    let list = document.getElementById("list");
+    list.innerHTML = "";
+
+    employees.forEach(emp => {
+        let li = document.createElement("li");
+        li.innerText = emp.name + " - ₹" + emp.salary;
+        list.appendChild(li);
+    });
+}
+
+// Filter employees
+function filterEmployees() {
+    let list = document.getElementById("list");
+    list.innerHTML = "";
+
+    let filtered = employees.filter(emp => emp.salary > 50000);
+
+    filtered.forEach(emp => {
+        let li = document.createElement("li");
+        li.innerText = emp.name + " - ₹" + emp.salary;
+        list.appendChild(li);
+    });
+}
+function calculateTotal() {
+    let total = employees.reduce((sum, emp) => sum + emp.salary, 0);
+
+    document.getElementById("total").innerText = "Total Salary = ₹" + total;
+}
+
+</script>
+
+</body>
+</html>
